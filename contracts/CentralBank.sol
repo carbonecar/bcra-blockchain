@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+//El contrato principal del Banco Central puede interactuar con el contrato 
+//de Activos y Pasivos para reflejar en su balance cualquier ajuste necesario 
+//tras cada emisión monetaria.
 contract CentralBank {
     address public owner;
     uint256 public baseMonetaria;
