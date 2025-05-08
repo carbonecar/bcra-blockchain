@@ -1,0 +1,41 @@
+@startuml
+actor "Comité de Crisis" as CC
+participant Blockchain
+participant CMD
+participant SM_ReglaMonetaria
+participant "Smart Contract de Votación" as SCV
+participant rARCoin
+participant Votante
+participant "Token votacion"  as Vote
+== Inicio del proceso ==
+CC -> CC : Determina necesidad de expansión de base
+CC -> CC : Expone motivos a la ciudadanía
+CC -> Blockchain : Publica nuevo Smart Contract de Regla Monetaria
+create SM_ReglaMonetaria
+CC -> SM_ReglaMonetaria: porcentajeEmision(10)
+CC -> Blockchain : Crea y publica Smart Contract de Votación
+create SCV
+CC -> SCV: fechaVotación
+
+== Generación de tokens de votación ==
+Votante ->rARCoin: Entregar token en custodia
+rARCoin -> CMD: SOLICITA token de votación\nbasado en balance de rARCoin
+CMD -> CMD : Congela rARCoin en custodia \npara evitar duplicación de votos
+CMD -> Votante : Entrega el token de votación
+create Vote
+CMD -> Vote: asociararARCoin
+
+== Votación ==
+Votante -> Vote: votar
+Vote -> SCV: emitirVoto
+SCV -> SCV : Cuenta los votos
+SCV->CMD: descongela_rARCoin
+
+
+== Modificación del contrato ==
+CC ->CMD: finalizarVotacion
+CMD -> SCV: finalizarVotacion
+SCV->CMD: resultadoVotacion(SM_REGLA_MONETARIA)
+CMD->CMD: modificaReglaMonetaria
+
+@enduml
