@@ -28,6 +28,7 @@ CMD -> Vote: asociararARCoin
 == Votación ==
 Votante -> Vote: votar
 Vote -> SCV: emitirVoto
+SCV ->rARCoin:selladoVoto
 SCV -> SCV : Cuenta los votos
 SCV->CMD: descongela_rARCoin
 
